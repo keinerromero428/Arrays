@@ -1,0 +1,1 @@
+//Enunciado: Con la lectura del ejercicio 4, calcular el promedio diario redondeado a pesos, mostrar qué días estuvieron por encima del promedio y cuántos fueron.

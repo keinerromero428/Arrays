@@ -1,26 +1,51 @@
 // Enunciado: Leer las notas de 5 aprendices en escala de 0 a 5. Si una nota está fuera del rango, se vuelve a pedir hasta que sea válida. Mostrar todas las notas separadas por comas, el promedio con un decimal y si el grupo aprobó (promedio mayor o igual a 3.0).
 
-let notas = [];
-
-for (let i = 0; i < 5; i++) {
-    let nota;
-    do {
-        nota = parseFloat(prompt(`Ingrese la nota del aprendiz ${i + 1} (0 a 5):`));
-        if (nota < 0 || nota > 5) {
-            alert("Nota inválida. Por favor ingrese un valor entre 0 y 5.");
+const leerNotaValida = (numero) => {
+    let nota = parseFloat(
+        prompt("Nota " + numero + ":")
+    );
+    while (nota < 0 || nota > 5) {
+        console.log("Nota inválida, debe estar entre 0 y 5");
+        nota = parseFloat(
+            prompt("Nota " + numero + ":")
+        );
+    }
+    return nota;
+};
+const calcularPromedio = (numeros) => {
+    let suma = 0;
+    for (let i = 0; i < numeros.length; i++) {
+        suma = suma + numeros[i];
+    }
+    return suma / numeros.length;
+};
+const unirConComas = (lista) => {
+    let texto = "";
+    for (let i = 0; i < lista.length; i++) {
+        texto = texto + lista[i];
+        if (i < lista.length - 1) {
+            texto = texto + ", ";
         }
-    } while (nota < 0 || nota > 5);
-    notas.push(nota);
+    }
+    return texto;
+};
+let notas = [];
+for (let i = 0; i < 5; i++) {
+    notas.push(
+        leerNotaValida(i + 1)
+    );
 }
-
-let suma = 0;
-for (let i = 0; i < notas.length; i++) {
-    suma += notas[i];
-}
-let promedio = suma / notas.length;
-
-console.log(`Notas ingresadas: ${notas.join(", ")}`);
-console.log(`Promedio: ${promedio.toFixed(1)}`);
-if (promedio >= 3.0) {
-    console.log("El grupo aprobó.");
+let promedio = calcularPromedio(notas);
+console.log(
+    "Notas: " +
+    unirConComas(notas)
+);
+console.log(
+    "Promedio: " +
+    promedio.toFixed(1)
+);
+if (promedio >= 3) {
+    console.log("El grupo aprobó");
+} else {
+    console.log("El grupo no aprobó");
 }

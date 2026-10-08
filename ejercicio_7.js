@@ -1,34 +1,35 @@
 // Enunciado: Una app de domicilios pide a los clientes calificar de 1 a 5 estrellas. Leer 10 calificaciones validando el rango. Contar cuántas hubo de cada valor usando un array de 5 contadores (no cinco variables) y mostrar un gráfico con asteriscos. Mostrar también la calificación más frecuente.
 
-let invitados = ["ana", "carlos", "luisa", "pedro", "sofía"];
-let nombre;
-let entraron = 0;
-let rechazados = 0;
+const contarPorEstrellas = (calificaciones) => {
+    let contadores = [ 0,0,0,0,0];
+    for (let i = 0; i < calificaciones.length; i++) {
+        let estrella = calificaciones[i];
 
-while (true) {
-    nombre = prompt("Ingrese el nombre del invitado (o 'fin' para terminar):").toLowerCase();
-
-    if (nombre === "fin") {
-        break;
+        contadores[estrella - 1] =
+            contadores[estrella - 1] + 1;
     }
-
-    let encontrado = false;
-    for (let i = 0; i < invitados.length; i++) {
-        if (invitados[i] === nombre) {
-            encontrado = true;
-            break;
-        }
+    return contadores;
+};
+const repetirCaracter = (caracter, veces) => {
+    let texto = "";
+    for (let i = 0; i < veces; i++) {
+        texto = texto + caracter;
     }
-
-    if (encontrado) {
-        console.log(`${nombre} puede entrar.`);
-        entraron++;
-    } else {
-        console.log(`${nombre} no está en la lista de invitados.`);
-        rechazados++;
-    }
-
+    return texto;
+};
+let calificaciones = [];
+for (let i = 0; i < 10; i++) {
+    let calificacion = parseInt(prompt( "Calificación " + (i + 1) + ":"));
+    while (calificacion < 1 || calificacion > 5) {
+        console.log("Calificación inválida, debe estar entre 1 y 5");
+        calificacion = parseInt(prompt( "Calificación " + (i + 1) + ":" ));}
+    calificaciones.push(calificacion);
+}
+let contadores = contarPorEstrellas(calificaciones);
+for (let i = 0; i < contadores.length; i++) {
+    console.log("Estrellas " + (i + 1) + ": " + repetirCaracter("*", contadores[i]) +" (" + contadores[i] + ")");
 }
 
-console.log(`Total de invitados que entraron: ${entraron}`);
-console.log(`Total de invitados rechazados: ${rechazados}`);
+let posicionFrecuente = buscarPosicionMayor(contadores);
+
+console.log("Más frecuente: " + (posicionFrecuente + 1) +" estrellas");
